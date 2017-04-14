@@ -129,8 +129,8 @@ public final class ChatSimpleGui {
     mainFrame.pack();
   }
   
-  //Creates and Builds the Menu Bar
-  private JMenuBar menuBar(){
+  //Creates and Builds the Menu Bar (made public and static to test more easily was originally private)
+  public static JMenuBar menuBar(){
 	  JMenuBar topMenuBar = new JMenuBar(); //the menu bar
 	  JMenu topMenuGeneral = new JMenu("General"); //first category of menu
 	  final JMenuItem topMenuItem = new JMenuItem("How to Use"); //details how to use the app
@@ -142,8 +142,6 @@ public final class ChatSimpleGui {
 	  
 	  //constructs the topMenuGeneral drop down menu with submenus 
 	  topMenuGeneral.add(coders); 
-	  
-	  //topMenuBar.add(topMenuColorSelector);
 	  
 	  topMenuItem.addActionListener(new ActionListener(){
 		  @Override 
