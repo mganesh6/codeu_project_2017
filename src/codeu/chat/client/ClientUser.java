@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Iterator;
 import codeu.chat.common.User;
 import codeu.chat.util.Logger;
 import codeu.chat.util.Uuid;
@@ -40,21 +40,32 @@ public final class ClientUser {
   private Store<String, User> usersByName = new Store<>(String.CASE_INSENSITIVE_ORDER);
 
   public ClientUser(Controller controller, View view) {
+
     this.controller = controller;
     this.view = view;
+
   }
 
   // Validate the username string
-  static public boolean isValidName(String userName) {
-    boolean clean = true;
-    if (userName.length() == 0) {
-      clean = false;
-    } else {
 
-      // TODO: check for invalid characters
+  public boolean isValidName(String userName) {
+
+
+    if (userName.length() == 0) {
+      return false;
+    } else{
+
+      for (User u : getUsers()) {
+
+        if(u.name.toUpperCase().equals(userName.toUpperCase())){
+          System.out.format("Error: user not created - Name already exists.");
+          return false;
+        }
+      }
 
     }
-    return clean;
+
+    return true;
   }
 
   public boolean hasCurrent() {
@@ -89,6 +100,7 @@ public final class ClientUser {
   }
 
   public void addUser(String name) {
+
     final boolean validInputs = isValidName(name);
 
     final User user = (validInputs) ? controller.newUser(name) : null;
@@ -97,7 +109,9 @@ public final class ClientUser {
       System.out.format("Error: user not created - %s.\n",
           (validInputs) ? "server failure" : "bad input value");
     } else {
+
       LOG.info("New user complete, Name= \"%s\" UUID=%s", user.name, user.id);
+
       updateUsers();
     }
   }
@@ -143,6 +157,7 @@ public final class ClientUser {
   }
 
   public String showUserInfo(String uname) {
+
     return getUserInfoString(usersByName.first(uname));
   }
 
