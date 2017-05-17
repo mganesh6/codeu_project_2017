@@ -66,6 +66,15 @@ public final class Store<KEY, VALUE> implements StoreAccessor<KEY, VALUE> {
       index.put(key, newLink);
     }
   }
+  
+  public void remove(KEY key){
+  	if(index.remove(key)!=null){
+  		//don't need to do anything, since return is not null and returning null, so we know it is gone 
+  	}
+  	else{
+  		//issue with removing 
+  	}
+  }
 
   @Override
   public VALUE first(KEY key) {

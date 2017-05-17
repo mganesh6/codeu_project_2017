@@ -73,7 +73,7 @@ public final class ConversationPanel extends JPanel {
     final JPanel buttonPanel = new JPanel();
     final GridBagConstraints buttonPanelC = new GridBagConstraints();
 
-    final JButton updateButton = new JButton("Choose Conversation");
+    final JButton updateButton = new JButton("Choose"); 
     final JButton addButton = new JButton("Add");
 
     updateButton.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -136,7 +136,7 @@ public final class ConversationPanel extends JPanel {
         }
       }
     });
-
+     
     // User clicks on Conversation - Set Conversation to current and fill in Messages panel.
     objectList.addListSelectionListener(new ListSelectionListener() {
       @Override

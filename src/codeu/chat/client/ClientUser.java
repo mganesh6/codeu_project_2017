@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.*; 
 
 import codeu.chat.common.User;
 import codeu.chat.util.Logger;
@@ -28,7 +29,8 @@ public final class ClientUser {
 
   private final static Logger.Log LOG = Logger.newLog(ClientUser.class);
 
-  private static final Collection<Uuid> EMPTY = Arrays.asList(new Uuid[0]);
+  //private static final Collection<Uuid> EMPTY = Arrays.asList(new Uuid[0]);
+  private static Collection<Uuid> EMPTY = new ArrayList<Uuid>(); 
   private final Controller controller;
   private final View view;
 
@@ -43,20 +45,25 @@ public final class ClientUser {
     this.controller = controller;
     this.view = view;
   }
-
-  // Validate the username string
-  static public boolean isValidName(String userName) {
-    boolean clean = true;
-    if (userName.length() == 0) {
+    
+// Validate the username string
+public boolean isValidName(String userName) {
+	boolean clean = true; 
+    if (userName.trim().length() == 0) {
       clean = false;
     } else {
 
-      // TODO: check for invalid characters
-
+      for (User currentUser : getUsers()) {
+		
+        if(currentUser.name.toUpperCase().equals(userName.toUpperCase())){
+          System.out.format("Error: user not created - %s already exists.\n", userName);
+          clean = false;
+        }
+      } 
     }
     return clean;
   }
-
+  
   public boolean hasCurrent() {
     return (current != null);
   }
@@ -88,27 +95,62 @@ public final class ClientUser {
     printUser(current);
   }
 
-  public void addUser(String name) {
+  //change the type to a boolean, so we can check if the user was created or not in the GUI
+  public boolean addUser(String name) {
     final boolean validInputs = isValidName(name);
 
     final User user = (validInputs) ? controller.newUser(name) : null;
 
     if (user == null) {
       System.out.format("Error: user not created - %s.\n",
-          (validInputs) ? "server failure" : "bad input value");
+          (validInputs) ? "server failure" : "bad input value"); 
     } else {
       LOG.info("New user complete, Name= \"%s\" UUID=%s", user.name, user.id);
       updateUsers();
+      
+      return true; 
     }
+    return false;
   }
 
+  //delete user method
+  public boolean deleteUser(String name) {
+  
+  		//get all users by name
+		Iterable <User> users = getUsers();
+		
+		User target; 
+		Uuid targetId; 
+		
+		//find user and get id
+		for(User currentUser:users){
+			if(currentUser.name.equals(name)){
+				target = currentUser; 
+				targetId = target.id;
+				
+				//delete user from hashmap and from store...
+				usersById.remove(targetId);
+				usersByName.remove(name); 
+				
+				//Add deleted user to EMPTY 
+				EMPTY.add(targetId);
+				
+				LOG.info("User deleted, Name = \"%s\" UUID = %s", name, targetId);
+				System.out.println("User deleted, Name = " + name); 
+		
+				return true; 
+			}
+		}
+		return false; 
+  }
+  
   public void showAllUsers() {
     updateUsers();
     for (final User u : usersByName.all()) {
       printUser(u);
     }
   }
-
+  
   public User lookup(Uuid id) {
     return (usersById.containsKey(id)) ? usersById.get(id) : null;
   }
