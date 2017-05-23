@@ -68,6 +68,7 @@ public final class ConversationPanel extends JPanel {
     final JScrollPane listScrollPane = new JScrollPane(objectList);
     listShowPanel.add(listScrollPane);
     listScrollPane.setMinimumSize(new Dimension(250, 200));
+    listScrollPane.setPreferredSize(new Dimension(250, 200));
 
     // Button bar
     final JPanel buttonPanel = new JPanel();
@@ -106,7 +107,10 @@ public final class ConversationPanel extends JPanel {
 
     this.add(titlePanel, titlePanelC);
     this.add(listShowPanel, listPanelC);
-    this.add(buttonPanel, buttonPanelC);
+    this.add(buttonPanel, buttonPanelC); 
+    titlePanel.setBackground(new Color(102, 162, 237));
+    listShowPanel.setBackground(new Color(102, 162, 237));
+    buttonPanel.setBackground(new Color(102, 162, 237));
 
     // User clicks Conversations Update button.
     updateButton.addActionListener(new ActionListener() {
