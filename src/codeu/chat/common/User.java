@@ -44,6 +44,7 @@ public final class User {
           Serializers.STRING.read(in),
           Time.SERIALIZER.read(in)
       );
+
     }
   };
 
