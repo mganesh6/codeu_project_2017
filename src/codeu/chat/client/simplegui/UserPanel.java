@@ -167,15 +167,7 @@ public final class UserPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         clientContext.user.updateUsers();
-        
-        for(User u:clientContext.user.getUsersByName().all()){
-          System.out.println("user name in panel" + u.name); 
-        }
-        System.out.println("User has current " + !clientContext.user.hasCurrent()); 
-        System.out.println("User value selected " + (userList.getSelectedIndex() != -1)); 
-        System.out.println("User exists " + clientContext.user.getUsersByName().exists(userList.getSelectedValue())); 
-        if (!clientContext.user.hasCurrent() && (userList.getSelectedIndex() != -1) && clientContext.user.getUsersByName().exists(userList.getSelectedValue())) {
-
+      if (!clientContext.user.hasCurrent() && (userList.getSelectedIndex() != -1) && clientContext.user.getUsersByName().exists(userList.getSelectedValue())) {
           final String data = userList.getSelectedValue();
           //Ask user for password
           final String userPassword = (String) JOptionPane.showInputDialog(
