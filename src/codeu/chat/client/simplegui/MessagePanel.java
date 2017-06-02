@@ -62,6 +62,13 @@ public final class MessagePanel extends JPanel {
 
     getAllMessages(owningConversation);
   }
+  
+  // External agent calls this to trigger an update of this panel's contents to blank.
+  public void updateToBlank() {
+    messageOwnerLabel.setText("Owner: ");
+    messageConversationLabel.setText("Conversation: ");
+    messageListModel.clear(); //we do not permit empty usernames, so this sets all the messages to blank
+  }
 
   private void initialize() {
 
@@ -317,22 +324,13 @@ public final class MessagePanel extends JPanel {
               final JTextArea searchResultField = new JTextArea(8,15);
               final JScrollPane messagesPane = new JScrollPane(searchResultField);
 
-
               textField.setLineWrap(true);
               textField.setWrapStyleWord(true);
 
               for (int index = 0; index < searchResult.getModel().getSize(); index++) {
                 searchResultField.append(searchResult.getModel().getElementAt(index));
               }
-
-              /*
-              JList<String> searchResult = new JList<String>(messagesArray); 
->>>>>>> e8afd99e21d4d3d0e93e14d8e00aaac9ec229127
-              JScrollPane messagesPane = new JScrollPane(searchResult);
-              messagesPane.setMinimumSize(new Dimension(250, 200));
-              messagesPane.setPreferredSize(new Dimension(250, 200));
-              */
-                
+              
               popUp.add(messagesPane); 
               JOptionPane.showMessageDialog(MessagePanel.this, popUp, "Search Results", JOptionPane.PLAIN_MESSAGE);
             }

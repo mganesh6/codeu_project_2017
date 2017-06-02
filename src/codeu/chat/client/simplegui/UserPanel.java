@@ -167,27 +167,19 @@ public final class UserPanel extends JPanel {
       @Override
       public void actionPerformed(ActionEvent e) {
         clientContext.user.updateUsers();
-        
-        for(User u:clientContext.user.getUsersByName().all()){
-          System.out.println("user name in panel" + u.name); 
-        }
-        System.out.println("User has current " + !clientContext.user.hasCurrent()); 
-        System.out.println("User value selected " + (userList.getSelectedIndex() != -1)); 
-        System.out.println("User exists " + clientContext.user.getUsersByName().exists(userList.getSelectedValue())); 
-        if (!clientContext.user.hasCurrent() && (userList.getSelectedIndex() != -1) && clientContext.user.getUsersByName().exists(userList.getSelectedValue())) {
-
+      if (!clientContext.user.hasCurrent() && (userList.getSelectedIndex() != -1) && clientContext.user.getUsersByName().exists(userList.getSelectedValue())) {
           final String data = userList.getSelectedValue();
           //Ask user for password
           final String userPassword = (String) JOptionPane.showInputDialog(
             UserPanel.this, "Enter " + data + "'s password:", "Enter Password", JOptionPane.PLAIN_MESSAGE,
             null, null, "");
-          System.out.println("sign in panel: " + userPassword);
           //check password to make sure it is correct and check it against the user's password
           if(clientContext.user.checkPassword(data, userPassword)){
             clientContext.user.signInUser(data);
             userSignedInLabel.setText("Hello " + data);
             conversationPanel.getAllConversations();
-            Conversation current = clientContext.conversation.getConversation(clientContext.conversation.getCurrentId());
+            clientContext.conversation.setCurrent(null);
+            conversationPanel.getMessagePanel().updateToBlank(); 
           } else{
             //user's password was incorrect
             JOptionPane.showMessageDialog(UserPanel.this, "Password for " + data + " was incorrect. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -200,7 +192,9 @@ public final class UserPanel extends JPanel {
            if(!clientContext.user.getUsersByName().exists(currentUser.name)){
             //sign out the user, since they should not still be signed in on the other client
             clientContext.user.signOutUser();
-            userSignedInLabel.setText("Nobody Signed In"); 
+            userSignedInLabel.setText("Nobody Signed In");
+            clientContext.conversation.setCurrent(null);
+            conversationPanel.getMessagePanel().updateToBlank(); 
           }  
         }
         JOptionPane.showMessageDialog(UserPanel.this, "Please select a valid user or sign out the current user.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -217,8 +211,12 @@ public final class UserPanel extends JPanel {
           final String data = userList.getSelectedValue();
           clientContext.user.signOutUser();
           userSignedInLabel.setText("Goodbye " + data);
+          clientContext.conversation.setCurrent(null);
+          conversationPanel.getMessagePanel().updateToBlank();  
         } else {
           JOptionPane.showMessageDialog(UserPanel.this, "Please select a user or ensure someone is signed in as a user.", "Error", JOptionPane.ERROR_MESSAGE);
+          clientContext.conversation.setCurrent(null);
+          conversationPanel.getMessagePanel().updateToBlank(); 
         }
       }
     });
@@ -242,8 +240,12 @@ public final class UserPanel extends JPanel {
         if (name != null && name.length() > 0) {
           if(clientContext.user.addUser(name, password)==false) {
           	JOptionPane.showMessageDialog(UserPanel.this, "This username is already in use.", "Error", JOptionPane.ERROR_MESSAGE);
+          	clientContext.conversation.setCurrent(null);
+            conversationPanel.getMessagePanel().updateToBlank(); 
           } 
           UserPanel.this.getAllUsers(listModel);
+          clientContext.conversation.setCurrent(null);
+          conversationPanel.getMessagePanel().updateToBlank(); 
         }
       }
     });

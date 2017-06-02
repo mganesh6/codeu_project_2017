@@ -122,6 +122,13 @@ public final class ClientConversation {
     return null;
   }
 
+  /*
+  * Checks if user exists in conversation. If not,
+  * adds the user to the user list of the current
+  * conversation.
+  *
+  * @param u User to add to conversation
+  */
   public void joinConversation(User u) {
 
     final Conversation current = getConversation(getCurrentId()); //get current conversation

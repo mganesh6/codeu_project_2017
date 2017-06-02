@@ -158,7 +158,7 @@ public final class Controller implements RawController, BasicController {
     return user;
   }
 
-  /*
+/*
  * Tells the model to delete the provided user from the server
  *
  * Provided a user to delete, calls model's deleteUser method to
@@ -173,6 +173,15 @@ public final class Controller implements RawController, BasicController {
     return model.deleteUser(userToDelete);
   }
 
+  /*
+  * Adds user to conversation by calling addConversationUser
+  * in the Model class.
+  *
+  * @param user User to add to conversation
+  * @param conv Conversation to add the user to
+  * @return boolean stating whether or not user has been added
+  * to conversation
+  */
   public boolean addConversationUser(User u, Conversation conv){
 
     boolean userAdded = model.addConversationUser(u, conv);

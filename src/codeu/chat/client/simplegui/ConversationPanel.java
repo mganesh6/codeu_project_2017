@@ -41,8 +41,12 @@ public final class ConversationPanel extends JPanel {
     super(new GridBagLayout());
     this.clientContext = clientContext;
     this.messagePanel = messagePanel;
-    //this.userPanel = userPanel;
     initialize();
+  }
+  
+  //gets the message panel to use in client user
+  public MessagePanel getMessagePanel(){
+    return messagePanel; 
   }
 
   private void initialize() {

@@ -98,6 +98,17 @@ public final class Model {
     return !(userById.exists(targetUser.id) && userByTime.exists(targetUser.creation) && userByText.exists(targetUser.name));
   }
 
+
+/*
+ * Adds user to conversation in Model. Iterates through
+ * conversationById store to identify which conversation to
+ * add to. Then adds to the user list of the conversation.
+ *
+ * @param user User to add to conversation
+ * @param conv Conversation to add the user to
+ * @return boolean stating whether or not user has been added
+ * to conversation
+ */
   public boolean addConversationUser(User u, Conversation conv){
 
     for(Conversation c: conversationById.all()){
