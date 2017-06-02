@@ -94,8 +94,6 @@ public class Controller implements BasicController {
   }
 
   public User newUser(String name, String password){
-
-    System.out.println("password method");
     User response = null;
 
     try (final Connection connection = source.connect()) {
@@ -117,13 +115,9 @@ public class Controller implements BasicController {
       LOG.error(ex, "Exception during call on server.");
     }
 
-    System.out.println("response: " + response);
-
     return response;
 
   }
-
-
 
   /*
  * Tells the server to delete the provided user
