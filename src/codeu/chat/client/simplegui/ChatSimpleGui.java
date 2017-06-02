@@ -147,16 +147,18 @@ public final class ChatSimpleGui {
 	  public void actionPerformed(ActionEvent e) {
 	  
 	  //message on how to use the application
-	  final String howToUseMessage = "To use this application, you must first add a user. "
+	  final String howToUseMessage = "To use this application, you must first add a user and create a password for the user. "
 	    							+ "Then, you must sign in the user and add a conversation. "
+                                    + "Next, invite users to your conversation. "
 									+ "Then, you may begin chatting!\n\n"
 									+ "To add a user:\n"
 									+"1) Click the Add button\n"
-									+"2) Enter the user's name\n"
+									+"2) Enter the user's name and a password\n"
 									+"3) Click OK or press ENTER\n\n"
 									+"To sign in a user:\n"
-									+"1) Click on the username until it is highlighted.\n"
-									+"2) Click on the Sign In button.\n\n"
+									+"1) Click on the username until it is highlighted\n"
+									+"2) Click on the Sign In button. Enter the user's password.\n"
+                                    +"3) Click OK or press ENTER\n\n"
 									+"To add a conversation:\n" 
 									+"1) Click the Add button\n"
 									+"2) Enter the title of the conversation\n"
@@ -164,10 +166,15 @@ public final class ChatSimpleGui {
 									+"To switch conversations:\n"
 									+"1) Click on the title of the conversation to which you would like to switch and press Choose Conversation.\n\n"
 		     						+"To send a message:\n"
-			 						+"1) Type your message in the white text editor to the left of the Send Message button.\n"
-			    					+"2) Once you are done typing your message, either press the Send Message button, press ENTER, or press RETURN."; 
-			  	
-      JOptionPane.showMessageDialog(topMenuItem, howToUseMessage, "How to Use", JOptionPane.PLAIN_MESSAGE);
+			 						+"1) Type your message in the white text editor above the Send Message button\n"
+			    					+"2) Once you are done typing your message, either press the Send Message button, press ENTER, or press RETURN\n\n"
+                                    +"To search a conversations:\n"
+                                    +"1) Type your search query in the text box to the left of the Search Messages button\n\n"
+                                    +"To pull from the server:\n"
+                                    +"1) Click Update Users/Update Conversations/Refresh Messages\n\n"
+	                                +"To invite users to a conversation:\n"
+                                    +"1) Click Invite Users Button\n\n";
+          JOptionPane.showMessageDialog(topMenuItem, howToUseMessage, "How to Use", JOptionPane.PLAIN_MESSAGE);
 	}
   });
 	  
