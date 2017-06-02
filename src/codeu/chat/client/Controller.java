@@ -155,6 +155,19 @@ public class Controller implements BasicController {
     return userDeleted; 
   }
 
+  /*
+  * Serializes to the server the network code for adding a user to a conversation,
+  * the user to add, and the conversation that the user should
+  * be added to.
+  *
+  * Receives a boolean as a response indicating whether or
+  * not the user has been added to the conversation.
+  *
+  * @param user User to add to conversation
+  * @param conv Conversation to add the user to
+  * @return boolean stating whether or not user has been added
+  * to conversation
+  */
   public boolean addConversationUser(User user, Conversation conv){
 
     boolean userAdded = false;
